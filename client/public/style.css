@@ -1,0 +1,86 @@
+body *{
+  font-family: "Ubuntu","sans";
+  background-color: rgb(39,91,195);
+}
+
+.carousel-image{
+  max-width: 100%;
+}
+
+.image-carousel{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-grid{
+  display: grid;
+  grid-template-columns: 1fr 0.75fr;
+  gap:5px;
+}
+
+@media(max-width:768px){
+  .login-grid{
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}
+
+.login-box,.login-data{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+}
+
+
+.login-box-inner{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+  padding:40px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.login-box-inner  *{
+  background-color: white;
+}
+
+.forgot-password-link{
+  margin-top: 6px;
+}
+
+.login-submit-button{
+  margin-top:12px;
+  max-width: 100%;
+  height: 40px;
+  width:200px;
+  font-weight: bold;
+  font-size: 20px;
+  color:white;
+  border: none;
+  background-color: rgb(39,91,195);
+}
+
+.login-input{
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(245, 245, 245);
+  height: 30px;
+  width:200px;
+}
+
+.login-icons{
+  height: 25px;
+}
+
+.input-data{
+  display: flex;
+  gap:3px;
+}
