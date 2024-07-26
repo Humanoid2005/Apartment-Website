@@ -5,8 +5,7 @@ function ImageCarousel(props){
     const [id,setid] = React.useState(0);
 
     React.useEffect(()=>{
-        console.log(id);
-        const SetImage = setInterval(()=>{;setid((id+1)%props.imgArray.length);},10000);
+        const SetImage = setInterval(()=>{;setid((id+1)%props.imgArray.length);},5000);
         return ()=>clearInterval(SetImage);
     },[id,props.imgArray.length]);
 

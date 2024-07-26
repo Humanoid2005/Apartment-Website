@@ -1,6 +1,38 @@
+.App{
+  height: 100vh;
+}
+
 body *{
   font-family: "Ubuntu","sans";
   background-color: rgb(39,91,195);
+}
+
+nav *{
+  background-color: white;
+}
+
+.apt-name{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding:10px;
+}
+
+@media(max-width:768px){
+  .apt-name{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding:10px;
+  }
+}
+
+.nav-option{
+  text-decoration: none;
+  color:black;
 }
 
 .carousel-image{
@@ -17,6 +49,7 @@ body *{
   display: grid;
   grid-template-columns: 1fr 0.75fr;
   gap:5px;
+  height: 80vh;
 }
 
 @media(max-width:768px){
@@ -51,6 +84,22 @@ body *{
   background-color: white;
 }
 
+.signup-box-inner{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+  padding:40px;
+  background-color: white;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-top:10px;
+}
+
+.signup-box-inner  *{
+  background-color: white;
+}
+
 .forgot-password-link{
   margin-top: 6px;
 }
@@ -59,12 +108,11 @@ body *{
   margin-top:12px;
   max-width: 100%;
   height: 40px;
-  width:200px;
+  width:250px;
   font-weight: bold;
   font-size: 20px;
-  color:white;
   border: none;
-  background-color: rgb(39,91,195);
+  background-color: rgb(246,213,38);
 }
 
 .login-input{
@@ -83,4 +131,359 @@ body *{
 .input-data{
   display: flex;
   gap:3px;
+}
+
+.forgot-password-div{
+  margin:50px auto;
+}
+
+.location-box,.contact-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding:5px;
+}
+
+.location-info,.contact-info{
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(246,213,38);
+  padding: 5px;
+  margin:5px;
+}
+
+.location-info *,.contact-info *{
+  background-color: rgb(246,213,38);
+}
+
+.number-span{
+  color:orangered;
+}
+
+.resident-box{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
+
+@media(max-width:768px){
+  .resident-box{
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}
+
+.announcement-box{
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.resident-data{
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(246,213,38);
+  padding: 5px;
+  margin:5px;
+}
+
+.resident-data *{
+  background-color: rgb(246,213,38);
+}
+
+.add-announcement{
+  margin: 0 auto;
+}
+
+.CRUD-box{
+  display: flex;
+  justify-content: flex-start;
+  gap: 10px;
+}
+
+.close-button-box{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.announcement-edit-input{
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(245, 245, 245);
+  height: 30px;
+  width:200px;
+  padding: 5px;
+}
+
+.edit-box{
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.edit-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+}
+
+.add-option{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.textarea-input{
+  width: 700px;
+  height: 100px;
+}
+
+.use-buttons{
+  border: none;
+}
+
+.add-form-add{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+}
+
+.add-box{
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.logout-button{
+  background-color:red;
+  font-weight: bold;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  width: 100px;
+  justify-self: flex-end;
+}
+
+.apt-box-1{
+  display: flex;
+  align-items: center;
+  gap:15px;
+}
+
+.loading-box{
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(39,91,195);
+}
+
+.loading-image{
+  background-color: rgb(248,238,238);
+}
+
+.loading-text{
+  color:black;
+}
+
+.form-edit-profile,.show-profile-data{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-edit-profile{
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(245, 245, 245);
+  padding: 5px;
+}
+
+.my-profile{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+}
+
+.save-edit-profile,.close-edit-profile,.open-edit-profile{
+  border: none;
+}
+
+.profile-info-house-number{
+  background-color: rgb(246,213,38);
+  color:orangered;
+}
+
+
+.profile-image{
+  height: 200;
+  width: 200;
+  border-radius: 50%;
+}
+
+.payment-types{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  max-width:100%;
+  width:100vw;
+}
+
+.bills-section{
+  display: grid;
+  grid-template-columns: 1fr;
+  gap:10px;
+}
+
+.bill-item{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 10px;
+}
+
+.payment-layer{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap:40px;
+}
+
+.search-bar-input{
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(245, 245, 245);
+  margin-bottom: 10px;
+  width: 300px;
+  height: 30px;
+}
+
+.payment-page{
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  flex-direction: column;
+  margin: 0 auto;
+  padding:15px;
+}
+
+.view-bill-button,.payment-button{
+  border-radius: 5px;
+  max-width: 100%;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  background-color: rgb(246,213,38);
+}
+
+.view-bill-link{
+  background-color: rgb(246,213,38);
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+  color: black;
+}
+
+.view-bill{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.check-button-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.payment-heading{
+  color: rgb(50, 255, 255);
+}
+
+.payment-form{
+  display: flex;
+  align-items: center;
+}
+
+.add-bill-link{
+  color: rgb(246,213,38);
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.input-div-add-bill{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+  margin:50px auto;
+}
+
+.add-bill-submit-button{
+  margin-top:12px;
+  max-width: 100%;
+  height: 40px;
+  width:250px;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  background-color: rgb(246,213,38);
+  margin-bottom:200px;
+}
+
+.type-input-bill,.amount-input-bill,.deadline-input-bill,.select-input-bill{
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(245, 245, 245);
+  margin-bottom: 10px;
+  width: 300px;
+  height: 30px;
+}
+
+.select-input-bill *{
+  background-color: rgb(245, 245, 245);
+}
+
+.payment-edit-frame{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.delete-bill-modal{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.add-bill-label{
+  color:black;
+  font-weight: bold;
+}
+
+.add-bill-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
 }
