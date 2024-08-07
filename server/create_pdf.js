@@ -66,12 +66,15 @@ function generateCustomerInformation(doc, receiptData) {
     .text(`INR ${receiptData.amount}`,150,customerInformationTop + 45)
 
 
+    .text("Transaction ID:", 300, customerInformationTop)
     .font("Helvetica-Bold")
-    .text(receiptData.name, 300, customerInformationTop)
+    .text(receiptData.transaction_id, 380, customerInformationTop)
+    .font("Helvetica-Bold")
+    .text(receiptData.name, 300, customerInformationTop+15)
     .font("Helvetica")
-    .text("House Number: "+receiptData.house_number, 300, customerInformationTop + 15)
+    .text("House Number: "+receiptData.house_number, 300, customerInformationTop + 30)
     .font("Helvetica")
-    .text("Mobile Number: "+receiptData.mobile_number, 300, customerInformationTop + 30)
+    .text("Mobile Number: "+receiptData.mobile_number, 300, customerInformationTop + 45)
     .moveDown();
 
   generateHr(doc, 267);

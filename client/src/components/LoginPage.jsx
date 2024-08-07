@@ -17,12 +17,12 @@ function LoginPage(props){
             <h1>Login</h1>
             <form className="login-data" method="POST" action="/check-user">
                 <div className="input-data">
+                <label className="house-label"><img className="login-icons" src="./images/house.svg" alt="house icon"/></label>
                     <input className="login-input house-number" type="text" name="house_number" placeholder="House Number" onChange={updateLoginInfo} value={loginInfo.house_number} required/>
-                    <label className="house-label"><img className="login-icons" src="./images/house.svg" alt="house icon"/></label>
                 </div>
                 <div className="input-data">
+                <label className="house-label"><img className="login-icons" src="./images/lock.svg" alt="lock icon"/></label>
                     <input className="login-input password" type="password" name="password" placeholder="Password" onChange={updateLoginInfo} value={loginInfo.password} required/>
-                    <label className="house-label"><img className="login-icons" src="./images/lock.svg" alt="lock icon"/></label>
                 </div>
                 <Link className="forgot-password-link" to="/forgot-password">Forgot Password</Link>
                 <Link className="signup-redirect-link" to="/sign-up">New Here ? Create Account</Link>

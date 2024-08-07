@@ -11,12 +11,15 @@ import bodyParser from "body-parser";
 import crypto from "crypto";
 import multer from "multer";
 import fs from "fs";
+import dotenv from "dotenv";
+dotenv.config();
 import { User } from "./models/Users.js";
 import { Token } from "./models/Tokens.js";
 import {Resident} from "./models/Residents.js";
 import { Announcement } from "./models/Announcements.js";
 import {ProfileImage} from "./models/Images.js";
 import {Bill} from "./models/Bills.js";
+import { UserDocument } from "./models/UserDocuments.js";
 import sendMail from "./mailer.js";
 import generateReceipt from "./create_pdf.js";
 
@@ -26,6 +29,7 @@ const saltRounds = 10;
 const house_numbers = ["admin","001","002","003","004","101","102","103","104","105","201","202","203","204","205","301","302","303","304"];
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const dbConnectionString = `mongodb+srv://SriramSrikanth:${process.env.MongoDBPassword}@sowgandhikaapartmentpro.igtlexc.mongodb.net/Users?retryWrites=true&w=majority&appName=SowgandhikaApartmentProject`;
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
@@ -44,29 +48,44 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-const UsersDB = await mongoose.connect(`mongodb+srv://SriramSrikanth:${process.env.MongoDBPassword}@sowgandhikaapartmentpro.igtlexc.mongodb.net/?retryWrites=true&w=majority&appName=SowgandhikaApartmentProject`)
+const UsersDB = await mongoose.connect(dbConnectionString)
 .then(() => {
   console.log('Connected to MongoDB');
 })
 .catch(err => {
   console.error('Error connecting to MongoDB:', err);});
 
-const storage = multer.diskStorage({
+const imgstorage = multer.diskStorage({
   destination: function(req,file,callback){
-      callback(null,path.join(__dirname, 'uploads'));
+      callback(null,path.join(__dirname, 'uploads/profile-images'));
   },
   filename: function(req,file,callback){
     callback(null,Date.now()+path.extname(file.originalname))
   },
 });
 
-const upload = multer({
-    storage:storage,
+const filestorage = multer.diskStorage({
+  destination: function(req,file,callback){
+      callback(null,path.join(__dirname,"uploads/user-documents"));
+  },
+  filename: function(req,file,callback){
+    callback(null,Date.now()+path.extname(file.originalname))
+  },
+});
+
+const imgupload = multer({
+    storage:imgstorage,
     onFileUploadStart: function (file) {
     console.log(file.originalname + ' is starting ...')
     },
 });
 
+const fileupload = multer({
+  storage:filestorage,
+  onFileUploadStart: function (file) {
+  console.log(file.originalname + ' is starting ...')
+  },
+});
 
 function generateToken(expiryMinutes = 60) {
   const token = crypto.randomBytes(20).toString('hex');
@@ -74,7 +93,8 @@ function generateToken(expiryMinutes = 60) {
   return { token, expires };
 }
 
-app.get("/logout",async(req,res)=>{
+
+app.get("/api/logout",async(req,res)=>{
   if(req.isAuthenticated()){
     await Token.deleteOne({type:"authToken",house_number:req.user.house_number});
   }
@@ -94,6 +114,17 @@ app.get("/api/profile-image",async (req,res)=>{
   }
   else{
     res.redirect("/")
+  }
+})
+
+app.get("/api/user-documents",async (req,res)=>{
+  if(req.isAuthenticated()){
+    const File = await UserDocument.find({house_number:req.user.house_number});
+    const output = File?File:null;
+    res.json(output);
+  }
+  else{
+    res.redirect("/");
   }
 })
 
@@ -232,11 +263,11 @@ app.post("/api/announcements",async (req,res)=>{
   res.redirect(newUrl);
 })
 
-app.post("/api/profile-image",upload.single("imagesrc"),async (req,res)=>{
+app.post("/api/profile-image",imgupload.single("imagesrc"),async (req,res)=>{
 
   const FindImage = await ProfileImage.findOne({house_number:req.user.house_number});
   if(FindImage){
-    fs.unlink(path.join(__dirname,`uploads/${FindImage.image}`), async (err) => {
+    fs.unlink(path.join(__dirname,`uploads/profile-images/${FindImage.image}`), async (err) => {
       if (err) {
         console.log(err);
         return res.status(500).send('Error deleting file');
@@ -249,6 +280,33 @@ app.post("/api/profile-image",upload.single("imagesrc"),async (req,res)=>{
     newImage.save();
   }
   res.redirect("/profile");
+})
+
+app.post("/api/user-documents",fileupload.single("filesrc"),async (req,res)=>{
+  const AddFile = new UserDocument({house_number:req.user.house_number,name:req.body.filename,file_id:`${req.user.house_number}${req.file.filename}`});
+  AddFile.save();
+  res.redirect("/user-documents");
+})
+
+app.post("/api/delete-user-documents/:id",async (req,res)=>{
+  const house_number = req.params.id.slice(0,3);
+  const file_name = req.params.id.slice(3);
+  const DeleteFile = await UserDocument.deleteOne({house_number:house_number,file_id:req.params.id});
+  fs.unlink(path.join(__dirname,`uploads/user-documents/${file_name}`), async (err) => {
+    if (err) {
+      console.log(err);
+      return res.status(500).send('Error deleting file');
+    }
+    else{
+      console.log("file deleted...");
+    }
+  })
+  res.redirect("/user-documents");
+})
+
+app.post("/api/download-user-documents/:id",async (req,res)=>{
+  const file_name = req.params.id.slice(0,5)!="admin"?req.params.id.slice(3):req.params.id.slice(5);
+  res.download(path.join(__dirname, 'uploads/user-documents/'+file_name));
 })
 
 app.post("/api/announcements/:id",async (req,res)=>{
@@ -283,8 +341,12 @@ app.post("/api/admin/payments/:id",async (req,res)=>{
 
 app.post("/api/add-bill",async (req,res)=>{
   var bill_number = "";
+  var transaction_id = "";
   for(var i=0;i<5;i++){
     bill_number += Math.floor(Math.random()*10);
+  }
+  for(var i=0;i<5;i++){
+    transaction_id += Math.floor(Math.random()*10);
   }
   for(var i=0;i<req.body.selectedOptions.length;i++){
     const NewBill = new Bill({
@@ -294,6 +356,7 @@ app.post("/api/add-bill",async (req,res)=>{
       pending:true,
       deadline:req.body.deadline,
       type:req.body.type,
+      transaction_id:transaction_id
     })
     await NewBill.save();
   }
@@ -323,12 +386,13 @@ app.post("/api/generate-receipt/:id",async (req,res)=>{
     datePaid:date.toLocaleDateString(),
     amount:billDetails.amount,
     mobile_number:userDetails.mobile_number,
+    transaction_id:billDetails.transaction_id
   }
 
-  generateReceipt(receiptData,path.join(__dirname, 'uploads/'+req.params.id+".pdf"),()=>{  res.download(path.join(__dirname, 'uploads/'+req.params.id+".pdf"));});
+  generateReceipt(receiptData,path.join(__dirname, 'uploads/bills/'+req.params.id+".pdf"),()=>{  res.download(path.join(__dirname, 'uploads/bills/'+req.params.id+".pdf"));});
 })
 
-app.post("/delete-account",async (req,res)=>{
+app.post("/api/delete-account",async (req,res)=>{
   if(req.isAuthenticated()){
     await User.deleteOne({house_number:req.user.house_number});
     await Token.deleteMany({house_number:req.user.house_number});
@@ -349,7 +413,7 @@ app.post("/delete-account",async (req,res)=>{
   })
 })
 
-app.post("/add-user",async (req,res)=>{
+app.post("/api/add-user",async (req,res)=>{
   const name = req.body.name;
   const house_number = req.body.house_number;
   const email = req.body.email;
@@ -361,7 +425,6 @@ app.post("/add-user",async (req,res)=>{
       try{
         const checkResult = await User.findOne({house_number:house_number});
         if(checkResult!=null){
-          res.send("You already have an account")
           res.redirect("/");
         }
         else{
@@ -396,22 +459,23 @@ app.post("/add-user",async (req,res)=>{
       }
     }
     else{
-      res.send("Invalid house number")
+      res.send("Invalid house number");
     }
   }
   else{
-    res.send("Re-entered password does not match the password entered initially")
+    res.send("Re-entered password does not match the password entered initially");
   }
 })
 
-app.post("/forgot-password",async (req,res)=>{
+app.post("/api/forgot-password",async (req,res)=>{
   const house_number = req.body.house_number;
   const findUser = await User.findOne({house_number:house_number});
   if(findUser!=null){
     const { token, expires } = generateToken(60);
     const resetToken = new Token({ type:"reset-password",house_number, token, expires });
     await resetToken.save();
-    const Link = "http://localhost:8000/reset-password/"+house_number+token;
+    const Link = `${req.protocol}://${req.get('host')}/reset-password/${house_number}${token}`;
+    console.log(Link);
     sendMail(findUser.email,
       "RESET PASSWORD FOR YOUR SOWGANDHIKA APARTMENT ACCOUNT",
       `Click on this link to reset your password: ${Link}`,

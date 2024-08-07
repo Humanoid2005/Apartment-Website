@@ -47,7 +47,8 @@ function AdminPayment(){
                     }
                     return true;
                 }).map((bill,index)=>{
-                    const boxcolor = bill.pending?"orangered":"green";
+                    const boxcolor = bill.pending?"#FF4C4C":"#A3FFD6";
+                    const headingcolor = bill.pending?"#F3FEB8":"#8576FF";
                     const formatted_date = new Date(bill.deadline).toLocaleDateString('en-GB', {
                         day: '2-digit',
                         month: '2-digit',
@@ -56,12 +57,12 @@ function AdminPayment(){
                     return (<div key={index} className="bill-item"  style={{backgroundColor:boxcolor}}>
                             {(bill.pending==false)&&<div className="check-button-div" style={{backgroundColor:boxcolor}}><img src="/images/check-button.png" height={30} style={{backgroundColor:boxcolor}}/></div>}
                             {bill.pending==false?<DeleteBill bill_id = {bill.bill_number} bgcolor={boxcolor} />:null}
-                            <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor}}>Bill ID:</span> {bill.bill_number}</h3>
+                            <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>Bill ID:</span> {bill.bill_number}</h3>
                             {bill.pending==true?<DeleteBill bill_id = {bill.bill_number} bgcolor={boxcolor} />:null}
-                            <PaymentEditFrame url={"/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Type: " valueName="type" data={bill.type} bgcolor={boxcolor}/>
-                            <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor}}>House Number:</span> {bill.house_number}</h3>
-                            <PaymentEditFrame url={"/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Deadline: " valueName="deadline" data={formatted_date} bgcolor={boxcolor} isDate={true}/>
-                            {bill.pending?<PaymentEditFrame url={"/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Amount: " valueName="amount" data={bill.amount} bgcolor={boxcolor}/>:<h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor}}>Payment Amount:</span> {bill.amount}</h3>}
+                            <PaymentEditFrame url={"/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Type: " valueName="type" data={bill.type} bgcolor={boxcolor} headingcolor={headingcolor}/>
+                            <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>House Number:</span> {bill.house_number}</h3>
+                            <PaymentEditFrame url={"/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Deadline: " valueName="deadline" data={formatted_date} bgcolor={boxcolor} isDate={true} headingcolor={headingcolor}/>
+                            {bill.pending?<PaymentEditFrame url={"/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Amount: " valueName="amount" data={bill.amount} bgcolor={boxcolor} headingcolor={headingcolor}/>:<h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor}}>Payment Amount:</span> {bill.amount}</h3>}
                             {bill.pending?null:<form className="view-bill" style={{backgroundColor:boxcolor}} action={`/api/generate-receipt/${bill.house_number}${bill.bill_number}`} method="POST">
                                 <input type="hidden" name="bill_id" value={bill.bill_number}/>
                                 <input type="hidden" name="house_number" value={bill.house_number}/>

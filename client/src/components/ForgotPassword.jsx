@@ -14,7 +14,7 @@ function ForgotPassword(props){
             <div className="login-box-inner">
                 <img src="./images/house-icon.png" alt="house-icon" height={70}/>
                 <h1>Forgot Password</h1>
-                <form className="login-data" method="POST" action="/forgot-password">
+                <form className="login-data" method="POST" action="/api/forgot-password">
                     <div className="input-data">
                         <input className="login-input house-number" type="text" name="house_number" placeholder="House Number" onChange={updateForgotInfo} value={house_number} required/>
                         <label className="house-label"><img className="login-icons" src="./images/house.svg" alt="house icon"/></label>

@@ -18,8 +18,9 @@ function Navbar(props){
             </div>
             <div className="apt-box-1">
                 <Link className="nav-option profile" to={payment_url}>Payments</Link>
+                <Link className="nav-option" to="/user-documents">My Files</Link>
                 <Link className="nav-option profile" to="/profile">Your Profile</Link>
-                <form action="/logout">
+                <form action="/api/logout">
                     <button className="logout-button">Logout</button>
                 </form>
             </div>

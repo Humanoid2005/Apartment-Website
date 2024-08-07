@@ -11,7 +11,7 @@ function AddBill(props) {
     {label:'105',value:'105'},{label:'201',value:'201'},{label:'202',value:'202'},
     {label:'203',value:'203'},{label:'204',value:'204'},{label:'205',value:'205'},
     {label:'301',value:'301'},{label:'302',value:'302'},{label:'303',value:'303'},
-    {label:'304',value:'304'}
+    {label:'304',value:'304'},{label:'admin',value:'admin'}
   ];
 
   const [selectedOptions, setSelectedOptions] = useState([{label:'Choose houses to add to bill',value:'Choose houses to add to bill'}]);
@@ -22,7 +22,7 @@ function AddBill(props) {
 
   const handleChange = (selected) => {
     if(selected.some(option => option.value === 'all')){
-      selected = HouseOptions.filter(option => option.value !== 'all');
+      selected = HouseOptions.filter(option => (option.value !== 'all'&&option.value!="admin"));
     }
     if(selected.some(option => option.value === 'Choose houses to add to bill')){
       selected = selected.filter((option)=>option.value!='Choose houses to add to bill')
@@ -81,6 +81,7 @@ function AddBill(props) {
               value={selectedOptions}
           />
         <input className="deadline-input-bill" type="text" name="deadline" value={deadline} onChange={(event)=>{setdeadline(event.target.value)}} onFocus={(event)=>{event.target.type="date"}} placeholder="Deadline for bill payment"/>
+        <input className="amount-input-bill" type="text" name="amount" value={amount} onChange={(event)=>{setamount(event.target.value)}} placeholder="Bill Amount"/>
         <input className="type-input-bill" type="text" name="type" value={type} onChange={(event)=>{settype(event.target.value)}} placeholder="Type of bill"/>
       </div>
     </div>

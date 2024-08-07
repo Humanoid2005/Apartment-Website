@@ -33,7 +33,7 @@ function MyProfile(){
                 <input type="file" ref={imageRef} onChange={handleImage} name="imagesrc" style={{display:"none"}}/>
                 <button className="submit-profile-image" type="submit" style={{display:"none"}} />
             </form>
-            {image?<img className="profile-image" src={"/uploads/"+image} onClick={handleImageClick} height={200}/>:<img className="profile-image" src="/images/user.png" onClick={handleImageClick} height={200}/>}
+            {image?<img className="profile-image" src={"/uploads/profile-images/"+image} onClick={handleImageClick} height={200}/>:<img className="profile-image" src="/images/user.png" onClick={handleImageClick} height={200}/>}
             <h1 className="profile-info-house-number">{ProfileData.house_number}</h1>
             <EditFrame valueName="name" title="Name: " data={ProfileData.name} isPassword={false}/>
             <EditFrame valueName="mobile_number" title="Mobile Number: " data={ProfileData.mobile_number} isPassword={false}/>

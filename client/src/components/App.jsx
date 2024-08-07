@@ -13,9 +13,11 @@ import Navbar_AfterLogin from "./NavBarAfterLogin";
 import MyProfile from "./MyProfile";
 import { AuthProvider } from "../Contexts/AuthContext";
 import PrivateRoute from "./PrivateRoutes";
+import AdminPrivateRoute from "./AdminPrivateRoutes";
 import Payment from "./Payment";
 import AdminPayment from "./AdminPayment";
 import AddBill from "./AddBill";
+import FilesUpload from "./FilesUpload";
 
 function HomePage() {
   const imgArray = ["./images/carousel-image-1.jpg","./images/carousel-image-2.jpg","./images/carousel-image-3.jpg"];
@@ -102,6 +104,15 @@ function AnnouncementsPageAdmin(){
   )
 }
 
+function UserFiles(){
+  return(
+    <div className="app">
+        <Navbar_AfterLogin/>
+        <FilesUpload/>
+    </div>
+  )
+}
+
 function AnnouncementsPage(){
   return (
     <div className="app">
@@ -161,11 +172,12 @@ function App(){
           <Route path="/residents-loggedIn" element={<PrivateRoute element={ResidentsLoggedInPage}/>}></Route>
           <Route path="/about-us" element={<AboutPage/>}></Route>
           <Route path="/announcements" element={<PrivateRoute element={AnnouncementsPage}/>}></Route>
-          <Route path="admin/announcements" element={<PrivateRoute element={AnnouncementsPageAdmin}/>}></Route>
+          <Route path="admin/announcements" element={<AdminPrivateRoute element={AnnouncementsPageAdmin}/>}></Route>
           <Route path="/profile" element={<PrivateRoute element={ProfilePage}/>}></Route>
           <Route path="/payments" element={<PrivateRoute element={PaymentPage}/>}></Route>
-          <Route path="/admin/payments" element={<PrivateRoute element={AdminPaymentPage}/>}></Route>
-          <Route path="/admin/add-bills" element={<PrivateRoute element={AddBillPage}/>}></Route>
+          <Route path="/admin/payments" element={<AdminPrivateRoute element={AdminPaymentPage}/>}></Route>
+          <Route path="/admin/add-bills" element={<AdminPrivateRoute element={AddBillPage}/>}></Route>
+          <Route path="/user-documents" element={<PrivateRoute element={UserFiles}/>}></Route>
         </Routes>
       </Router>
     </AuthProvider>

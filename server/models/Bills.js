@@ -7,6 +7,7 @@ const BillSchema = new mongoose.Schema({
     type:{type:String,default:"Maintainence"},
     pending:{type:Boolean,default:true},
     deadline:{type:Date},
+    transaction_id:{type:String}
 });
 
 export const Bill = mongoose.model("Bills",BillSchema);

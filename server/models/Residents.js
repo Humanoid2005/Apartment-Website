@@ -5,6 +5,5 @@ const ResidentSchema = new mongoose.Schema({
     owner: String,
     resident:String,
     email:String,
-},{ collection: "Residents" });
-
-export const Resident = mongoose.model("Residents",ResidentSchema);
+});
+export const Resident = mongoose.model("residents",ResidentSchema,"residents");

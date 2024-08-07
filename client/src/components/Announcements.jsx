@@ -27,7 +27,7 @@ function Announcements(props){
                             <form className="add-form-add" action="/api/announcements" method="POST">
                                 <input className="announcement-edit-input" type="text" name="title" placeholder="Announcement Title" value={addtitle} onChange={(event)=>{setaddtitle(event.target.value)}} required/>
                                 <textarea className="announcement-edit-input textarea-input" name="information" value={addinformation} placeholder="Announcement" onChange={(event)=>{setaddinformation(event.target.value)}} required/>
-                                <input className="announcement-edit-input" type="hidden" value={Date()}/>
+                                <input className="announcement-edit-input" type="hidden" value={new Date().toLocaleDateString('en-GB', {day: '2-digit',month: '2-digit',year: 'numeric'})}/>
                                 <button className="announcement-edit-submit use-buttons" type="submit"><img className="submit-button" src="/images/check-button.png" height={30}/></button>
                             </form>
                         </div>
@@ -36,7 +36,7 @@ function Announcements(props){
         {AnnouncementData.map((item,index)=>{
             return <div key = {index} className="resident-data">
                 <h1>{item.title}</h1>
-                <p>Date: {item.DOA}</p>
+                <p>Date: {new Date(item.DOA).toLocaleDateString('en-GB', {day: '2-digit',month: '2-digit',year: 'numeric'})}</p>
                 <h3>{item.information}</h3>
                 {props.isAdmin&&(editMode?<div className="edit-box">
                     <div className="close-button-box">
@@ -46,7 +46,7 @@ function Announcements(props){
                     <form  className="edit-form" action={"/api/announcements/"+item._id} method="PATCH">
                         <input className="announcement-edit-input" type="text" name="title" placeholder="Announcement Title" value={title} onChange={(event)=>{settitle(event.target.value)}}/>
                         <textarea className="announcement-edit-input textarea-input" name="information" value={information} placeholder="Announcement" onChange={(event)=>{setinformation(event.target.value)}}/>
-                        <input className="announcement-edit-input" type="hidden" value={Date()}/>
+                        <input className="announcement-edit-input" type="hidden" value={new Date().toLocaleDateString('en-GB', {day: '2-digit',month: '2-digit',year: 'numeric'})}/>
                         <button className="announcement-edit-submit use-buttons" type="submit"><img className="submit-button" src="/images/check-button.png" height={30}/></button>
                     </form>
                     </div>

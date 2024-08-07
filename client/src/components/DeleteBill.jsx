@@ -17,7 +17,7 @@ function DeleteBill(props) {
   return (
     <>
       <div className="delete-bill-modal" style={{backgroundColor:props.bgcolor}}>
-        <button onClick={toggleModal} className="btn-modal" style={{backgroundColor:props.bgcolor}}>
+        <button onClick={toggleModal} className="btn-modal delete-bill-modal-1" style={{backgroundColor:props.bgcolor}}>
             <img src="/images/close.png" height={30} style={{backgroundColor:props.bgcolor}}/>
         </button>
       </div>

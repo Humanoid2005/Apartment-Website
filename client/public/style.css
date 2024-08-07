@@ -112,7 +112,13 @@ nav *{
   font-weight: bold;
   font-size: 20px;
   border: none;
+  border-radius: 5px;
   background-color: rgb(246,213,38);
+  cursor:pointer;
+}
+
+.login-submit-button:hover{
+  background-color: #F9F54B;
 }
 
 .login-input{
@@ -166,6 +172,18 @@ nav *{
   grid-template-columns: 1fr 1fr 1fr;
 }
 
+.residents-div{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.resident-search-bar{
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 @media(max-width:768px){
   .resident-box{
     display: grid;
@@ -204,6 +222,11 @@ nav *{
 .close-button-box{
   display: flex;
   justify-content: flex-end;
+  cursor: pointer;
+}
+
+.close-image{
+  border-radius: 50%;
 }
 
 .announcement-edit-input{
@@ -245,6 +268,7 @@ nav *{
 
 .use-buttons{
   border: none;
+  cursor: pointer;
 }
 
 .add-form-add{
@@ -271,6 +295,11 @@ nav *{
   height: 30px;
   width: 100px;
   justify-self: flex-end;
+  cursor: pointer;
+}
+
+.logout-button:hover{
+  background-color: rgb(205, 6, 6);
 }
 
 .apt-box-1{
@@ -322,6 +351,11 @@ nav *{
 
 .save-edit-profile,.close-edit-profile,.open-edit-profile{
   border: none;
+  cursor:pointer;
+}
+
+.save-edit-profile:hover,.close-edit-profile:hover,.open-edit-profile:hover{
+  background-color: rgb(8, 58, 157);
 }
 
 .profile-info-house-number{
@@ -334,6 +368,7 @@ nav *{
   height: 200;
   width: 200;
   border-radius: 50%;
+  cursor:pointer;
 }
 
 .payment-types{
@@ -390,7 +425,13 @@ nav *{
   font-weight: bold;
   font-size: 20px;
   border: none;
+  border-radius: 5px;
   background-color: rgb(246,213,38);
+  cursor: pointer;
+}
+
+.view-bill-button:hover,.payment-button:hover{
+  background-color: #F9F54B;
 }
 
 .view-bill-link{
@@ -411,10 +452,11 @@ nav *{
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .payment-heading{
-  color: rgb(50, 255, 255);
+  color: #8576FF;
 }
 
 .payment-form{
@@ -445,8 +487,14 @@ nav *{
   font-weight: bold;
   font-size: 20px;
   border: none;
+  border-radius: 5px;
   background-color: rgb(246,213,38);
   margin-bottom:200px;
+  cursor: pointer;
+}
+
+.add-bill-submit-button:hover{
+  background-color: #F9F54B;
 }
 
 .type-input-bill,.amount-input-bill,.deadline-input-bill,.select-input-bill{
@@ -486,4 +534,185 @@ nav *{
   justify-content: center;
   align-items: center;
   gap:10px;
+}
+
+.user-document-file-input,.user-document-filename-input{
+  border: none;
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  background-color: rgb(245, 245, 245);
+  margin-bottom: 10px;
+  width: 300px;
+  height: 30px;
+}
+
+.user-document-submit-button{
+  margin-top:12px;
+  max-width: 100%;
+  height: 40px;
+  width:250px;
+  font-weight: bold;
+  font-size: 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(246,213,38);
+  margin-bottom:50px;
+  cursor: pointer;
+}
+
+.user-document-submit-button:hover{
+  background-color: #F9F54B;
+}
+
+.user-file-data,.user-files{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.user-file{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.intermediate-file-div{
+  width:100%;
+  background-color: white;
+}
+
+.intermediate-file-div *{
+  background-color: white;
+}
+
+.file-icons{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:10px;
+}
+
+.download-button{
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.download-button:hover{
+  background-color: whitesmoke;
+}
+
+.delete-button{
+  border: none;
+  background-color: red;
+  cursor: pointer;
+}
+
+.delete-button:hover{
+  background-color: #a7002a;
+}
+
+.delete-button img{
+  border:none;
+  border-radius: 50%;
+}
+
+.add-file-form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top:50px;
+}
+
+.contact-for-details,.house-for-sale,.house-for-rent{
+  color:orangered;
+  font-weight: bold;
+}
+
+.toast-container-div *{
+  background-color: #E74C3C;
+}
+
+.toast-container-div{
+  background-color: #E74C3C;
+}
+
+input[type="file"] {
+  position: relative;
+}
+
+input[type="file"]::file-selector-button {
+  width: 136px;
+  color: transparent;
+}
+
+/* Faked label styles and icon */
+input[type="file"]::before {
+  position: absolute;
+  pointer-events: none;
+  top: 10px;
+  left: 16px;
+  height: 20px;
+  width: 20px;
+  content: "";
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230964B0'%3E%3Cpath d='M18 15v3H6v-3H4v3c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2v-3h-2zM7 9l1.41 1.41L11 7.83V16h2V7.83l2.59 2.58L17 9l-5-5-5 5z'/%3E%3C/svg%3E");
+}
+
+input[type="file"]::after {
+  position: absolute;
+  pointer-events: none;
+  top: 11px;
+  left: 40px;
+  color: #0964b0;
+  content: "Upload File";
+}
+
+.user-document-file-input::file-selector-button {
+  border-radius: 4px;
+  padding: 0 16px;
+  height: 40px;
+  cursor: pointer;
+  background-color: white;
+  border: 1px solid rgba(0, 0, 0, 0.16);
+  box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.05);
+  margin-right: 16px;
+  transition: background-color 200ms;
+}
+
+.user-document-file-input{
+  padding-bottom: 5px;
+}
+
+.user-document-file-input::file-selector-button:hover {
+  background-color: #f3f4f6;
+}
+
+.user-document-file-input::file-selector-button:active {
+  background-color: #e5e7eb;
+}
+
+.delete-bill-modal-1{
+  cursor: pointer;
+}
+
+.edit-button:hover{
+  background-color: rgb(217, 181, 0)
+}
+
+.add-button:hover,.close-button:hover,.announcement-edit-submit:hover{
+  background-color: rgb(8, 58, 157);
+}
+
+.completed-payments-select:hover{
+  cursor: pointer;
+  color: white;
+}
+
+.pending-payments-select:hover{
+  cursor: pointer;
+  color:white;
 }
