@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [houseNumber, setHouseNumber] = useState("");
     const [isLoading, setIsLoading] = useState(true);
-    const { data: token, pending, error } = useFetch("http://localhost:8000/api/is-authenticated");
+    const { data: token, pending, error } = useFetch(`${window.location.protocol}//${window.location.host}`+"/api/is-authenticated");
 
     useEffect(() => {
         if (error) {

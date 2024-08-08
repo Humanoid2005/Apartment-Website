@@ -4,11 +4,13 @@ import EditFrame from "./Edit-Frame";
 import LoadingPage from "./LoadingPage";
 import Modal from "./Modal";
 
+
+
 function MyProfile(){
     const imageRef = React.useRef(null);
-    const {data:ProfileData,pending,error} = useFetch("http://localhost:8000/api/profile-details");
-    const {data:ImageURL,pending:ImagePending,error:ImageError} = useFetch("http://localhost:8000/api/profile-image");
-
+    const {data:ProfileData,pending,error} = useFetch(`${window.location.protocol}//${window.location.host}`+"/api/profile-details");
+    const {data:ImageURL,pending:ImagePending,error:ImageError} = useFetch(`${window.location.protocol}//${window.location.host}`+"/api/profile-image");
+    console.log(window.location.hostname)
     const [image,setimage] = React.useState(null);
 
     React.useEffect(()=>{

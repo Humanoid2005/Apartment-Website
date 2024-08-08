@@ -9,7 +9,7 @@ function Announcements(props){
     const [information,setinformation] = React.useState("");
     const [addtitle,setaddtitle] = React.useState("");
     const [addinformation,setaddinformation] = React.useState("");
-    const {data:AnnouncementData,pending,error} = useFetch("http://localhost:8000/api/announcements");
+    const {data:AnnouncementData,pending,error} = useFetch(`${window.location.protocol}//${window.location.host}`+"/api/announcements");
 
     if(error){
         return <LoadingPage message={error}/>

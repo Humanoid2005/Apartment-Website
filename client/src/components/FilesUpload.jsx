@@ -8,7 +8,7 @@ function FilesUpload(){
     const [searchbar,setsearchbar] = React.useState("");
     const [addfile,setaddfile] = React.useState(false);
     const [filename,setfilename] = React.useState("");
-    const {data:files,pending,error} = useFetch("http://localhost:8000/api/user-documents");
+    const {data:files,pending,error} = useFetch(`${window.location.protocol}//${window.location.host}`+"/api/user-documents");
 
 
     if(error){
