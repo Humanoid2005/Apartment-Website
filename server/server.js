@@ -32,7 +32,13 @@ const __dirname = path.dirname(__filename);
 const dbConnectionString = `mongodb+srv://SriramSrikanth:${process.env.MongoDBPassword}@sowgandhikaapartmentpro.igtlexc.mongodb.net/Users?retryWrites=true&w=majority&appName=SowgandhikaApartmentProject`;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(
+  {
+    orgin:[""],
+    methods:["GET","POST","PATCH","DELETE"],
+    credentials:true
+  }
+));
 app.use(express.json());
 app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
