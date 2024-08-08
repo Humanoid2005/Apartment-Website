@@ -289,8 +289,8 @@ app.post("/api/user-documents",fileupload.single("filesrc"),async (req,res)=>{
 })
 
 app.post("/api/delete-user-documents/:id",async (req,res)=>{
-  const house_number = req.params.id.slice(0,3);
-  const file_name = req.params.id.slice(3);
+  const house_number = req.params.id.slice(0,5)!="admin"?req.params.id.slice(0,3):req.params.id.slice(0,5);
+  const file_name = req.params.id.slice(0,5)!="admin"?req.params.id.slice(3):req.params.id.slice(5);
   const DeleteFile = await UserDocument.deleteOne({house_number:house_number,file_id:req.params.id});
   fs.unlink(path.join(__dirname,`uploads/user-documents/${file_name}`), async (err) => {
     if (err) {
@@ -317,8 +317,9 @@ app.post("/api/announcements/:id",async (req,res)=>{
 })
 
 app.post("/api/delete-bill/:id",async (req,res)=>{
-  const bill_number = req.params.id;
-  await Bill.deleteMany({bill_number:bill_number});
+  const bill_number = req.params.id.slice(0,5)=="admin"?req.params.id.slice(5):req.params.id.slice(3);
+  const house_number = req.params.id.slice(0,5)!="admin"?req.params.id.slice(0,3):req.params.id.slice(0,5);
+  await Bill.deleteOne({bill_number:bill_number,house_number:house_number});
   const newUrl = req.user.house_number=="admin"?"/admin/payments":"/payments";
   res.redirect(newUrl);
 })

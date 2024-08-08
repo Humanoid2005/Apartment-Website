@@ -58,7 +58,7 @@ function AdminPayment(){
                             {(bill.pending==false)&&<div className="check-button-div" style={{backgroundColor:boxcolor}}><img src="/images/check-button.png" height={30} style={{backgroundColor:boxcolor}}/></div>}
                             {bill.pending==false?<DeleteBill bill_id = {bill.bill_number} bgcolor={boxcolor} />:null}
                             <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>Bill ID:</span> {bill.bill_number}</h3>
-                            {bill.pending==true?<DeleteBill bill_id = {bill.bill_number} bgcolor={boxcolor} />:null}
+                            {bill.pending==true?<DeleteBill bill_id = {bill.bill_number} bgcolor={boxcolor} house_number={bill.house_number}/>:null}
                             <PaymentEditFrame url={"/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Type: " valueName="type" data={bill.type} bgcolor={boxcolor} headingcolor={headingcolor}/>
                             <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>House Number:</span> {bill.house_number}</h3>
                             <PaymentEditFrame url={"/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Deadline: " valueName="deadline" data={formatted_date} bgcolor={boxcolor} isDate={true} headingcolor={headingcolor}/>
