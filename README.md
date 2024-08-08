@@ -3,7 +3,7 @@
 This is a apartment website created in order to digitalise and manage the important activities in an apartment.
 
 | House | Numbers | in  | the | Apartment |
-| ----- | ------- | --- | --- | --------- | --- | --- |
+| ----- | ------- | --- | --- | --------- |
 | 🏠    |         | 001 | 002 | 003       | 004 |
 | 🏡    |         | 101 | 102 | 103       | 104 |
 | 🛖    |         | 105 | 201 | 202       | 203 |
