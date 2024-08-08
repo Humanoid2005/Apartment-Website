@@ -38,7 +38,7 @@ app.use(express.static(path.join(__dirname, '../client/dist')));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use(session({
-  secret:"TheKeyToByPassLogin",
+  secret:process.env.secretKey,
   resave: true,
   saveUninitialized: true,
   cookie:{
