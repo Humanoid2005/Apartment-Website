@@ -602,3 +602,5 @@ passport.deserializeUser((user,cb)=>{
 app.listen(port,()=>{
     console.log(`The server is running on http://localhost:${port}`);
 })
+
+export default app;
