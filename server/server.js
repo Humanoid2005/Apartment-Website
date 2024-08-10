@@ -137,6 +137,7 @@ app.get("/api/user-documents",async (req,res)=>{
 
 app.get("/api/is-authenticated",async (req,res)=>{
   if(req.isAuthenticated()){
+    console.log(`${req.user.house_number} is authenticated...`);
     res.json({house_number:req.user.house_number,status:true});
   }
   else{
