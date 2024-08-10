@@ -15,7 +15,7 @@ function ResetPassword(props){
         <div className="login-box-inner">
             <img src="/images/house-icon.png" alt="house-icon" height={70}/>
             <h1>Reset Password</h1>
-            <form className="login-data" method="POST" action={"http://localhost:8000/api/reset-password/"+window.location.pathname.split("/").at(-1)}>
+            <form className="login-data" method="POST" action={"https://apartment-website-production.up.railway.app/api/reset-password/"+window.location.pathname.split("/").at(-1)}>
                 <div className="input-data">
                     <input className="login-input password" type="password" name="password" placeholder="New Password" onChange={updatePasswordInfo} value={newPassword.password} required/>
                     <label className="house-label"><img className="login-icons" src="/images/lock.svg" alt="lock icon"/></label>
