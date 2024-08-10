@@ -98,7 +98,9 @@ function generateToken(expiryMinutes = 60) {
   return { token, expires };
 }
 
-
+app.get("/",(req,res)=>{
+  res.send({message:"homepage of backend is running..."});
+})
 app.get("/api/logout",async(req,res)=>{
   if(req.isAuthenticated()){
     await Token.deleteOne({type:"authToken",house_number:req.user.house_number});
