@@ -44,7 +44,7 @@ function AddBill(props) {
   const handleSubmit = async () => {
     console.log("Submitting....");
     try {
-      const response = await fetch('http://localhost:8000/api/add-bill', {
+      const response = await fetch('https://apartment-website-production.up.railway.app/api/add-bill', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
