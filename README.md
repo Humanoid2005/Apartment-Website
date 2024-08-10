@@ -1,6 +1,6 @@
 # Apartment Website
 
-This is a apartment website created in order to digitalise and manage the important activities in an apartment.
+This is an apartment website created in order to digitalise and manage the important activities in an apartment.
 
 | House | Numbers | in  | the | Apartment |
 | ----- | ------- | --- | --- | --------- |
