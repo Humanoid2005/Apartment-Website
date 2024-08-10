@@ -137,13 +137,7 @@ app.get("/api/user-documents",async (req,res)=>{
 
 app.get("/api/is-authenticated",async (req,res)=>{
   if(req.isAuthenticated()){
-    const GetAuthToken = await Token.findOne({type:"authToken",house_number:req.user.house_number});
-    if(GetAuthToken){
-      res.json({house_number:GetAuthToken.house_number,status:true});
-    }
-    else{
-      res.json({house_number:null,status:false});
-    }
+    res.json({house_number:req.user.house_number,status:true});
   }
   else{
     res.json({house_number:null,status:false});
