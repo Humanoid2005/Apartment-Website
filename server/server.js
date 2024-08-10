@@ -49,7 +49,7 @@ app.use(session({
     maxAge:1000*60*60*24,
     secure:true,
     sameSite:"None",
-    domain:"https://sowgandhika-apartments.netlify.app"
+    domain:".netlify.app"
   }
 }));
 app.use(passport.initialize());
