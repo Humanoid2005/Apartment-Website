@@ -3,11 +3,11 @@ import useFetch from "./useFetch";
 import LoadingPage from "./LoadingPage";
 
 function Residents(props){
-    const {data:ResidentData,pending,error} = useFetch(`${window.location.protocol}//${window.location.host}`+"/api/residents-data");
+    const {data:ResidentData,pending,error} = useFetch("http://localhost:8000/api/residents-data");
     const [searchbar,setsearchbar] = React.useState("");
 
     if(error){
-        return <LoadingPage message={error}/>
+        return <LoadingPage message={"Loading..."}/>
     }
 
     return (pending==false?<div className="residents-div">

@@ -8,7 +8,7 @@ function EditFrame(props){
 
     return (
         editdata?<div className="edit-profile-data">
-            <form className="form-edit-profile" action={props.isPassword?"/api/user-details/change-password":"/api/user-details"} method="POST">
+            <form className="form-edit-profile" action={props.isPassword?"http://localhost:8000/api/user-details/change-password":"http://localhost:8000/api/user-details"} method="POST">
                 <h3>{props.title}</h3>
                 <button className="close-edit-profile" onClick={(event)=>{event.preventDefault();seteditdata(false);setchangedvalue("");}}><img className="close-edit-profile-image" src="/images/close.png" height={30}/></button>
                 <input type={props.isPassword?"password":"text"} name = {props.valueName}  onChange={(event)=>{setchangedvalue(event.target.value)}} value={changedvalue} placeholder={props.title} className="input-edit-profile"/>

@@ -27,7 +27,7 @@ function DeleteBill(props) {
           <div className="modal-content">
             <h3>Are you sure about deleting this bill ?</h3>
             <p>Please note that these changes cannot be reversed.</p>
-            <form className="confirm-delete-form" action={`/api/delete-bill/${props.house_number}${props.bill_id}`} method="POST">
+            <form className="confirm-delete-form" action={`http://localhost:8000/api/delete-bill/${props.house_number}${props.bill_id}`} method="POST">
                     <button className="delete-account-button">Delete Bill</button>
             </form>
             <img className="close-image close-modal" src="/images/close.png" height={20} onClick={toggleModal}/>

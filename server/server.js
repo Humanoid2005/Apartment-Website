@@ -24,6 +24,7 @@ import sendMail from "./mailer.js";
 import generateReceipt from "./create_pdf.js";
 
 const app = express();
+const frontenddomain = "http://localhost:5173";
 const port = process.env.PORT || 8000;
 const saltRounds = 10;
 const house_numbers = ["admin","001","002","003","004","101","102","103","104","105","201","202","203","204","205","301","302","303","304"];
@@ -31,28 +32,26 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dbConnectionString = `mongodb+srv://SriramSrikanth:${process.env.MongoDBPassword}@sowgandhikaapartmentpro.igtlexc.mongodb.net/Users?retryWrites=true&w=majority&appName=SowgandhikaApartmentProject`;
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors(
-  {
-    orgin:[""],
-    methods:["GET","POST","PATCH","DELETE"],
-    credentials:true
-  }
-));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, '../client/dist')));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
 app.use(session({
   secret:process.env.secretKey,
   resave: true,
   saveUninitialized: true,
   cookie:{
-    maxAge:1000*60*60,
+    maxAge:1000*60*60*24,
   }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors({
+  origin: frontenddomain,
+  methods: ["GET", "POST", "PATCH", "DELETE"],
+  credentials: true
+}));
+app.use(express.json());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const UsersDB = await mongoose.connect(dbConnectionString)
 .then(() => {
@@ -108,7 +107,7 @@ app.get("/api/logout",async(req,res)=>{
     if(err){
       return next(err);
     }
-    res.redirect("/");
+    res.redirect(frontenddomain+"/");
   })
 })
 
@@ -119,7 +118,7 @@ app.get("/api/profile-image",async (req,res)=>{
     res.json(output);
   }
   else{
-    res.redirect("/")
+    res.redirect(frontenddomain+"/")
   }
 })
 
@@ -130,12 +129,11 @@ app.get("/api/user-documents",async (req,res)=>{
     res.json(output);
   }
   else{
-    res.redirect("/");
+    res.redirect(frontenddomain+"/");
   }
 })
 
 app.get("/api/is-authenticated",async (req,res)=>{
-
   if(req.isAuthenticated()){
     const GetAuthToken = await Token.findOne({type:"authToken",house_number:req.user.house_number});
     if(GetAuthToken){
@@ -157,7 +155,7 @@ app.get("/api/profile-details",async (req,res)=>{
     res.json(ProfileDetails);
   }
   else{
-    res.redirect("/");
+    res.redirect(frontenddomain+"/");
   }
 })
 
@@ -185,9 +183,9 @@ app.get("/api/bills",async (req,res)=>{
   res.json(AllBills);
 })
 
-app.get('*', (req, res) => {
+/*app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, '../client/dist', 'index.html'));
-})
+})*/
 
 app.post("/api/user-details",async (req,res)=>{
   if(req.isAuthenticated()){
@@ -201,10 +199,10 @@ app.post("/api/user-details",async (req,res)=>{
       password:findInfo.password
     };
     await User.updateOne({house_number:house_number},editInfo);
-    res.redirect("/profile");
+    res.redirect(frontenddomain+"/profile");
   }
   else{
-    res.redirect("/");
+    res.redirect(frontenddomain+"/");
   }
 })
 
@@ -223,7 +221,7 @@ app.post("/api/user-details/change-password",async (req,res)=>{
           else{
             const update = await User.findOneAndUpdate({house_number:house_number},{password:hash});
             const redirectURL = req.user.house_number=="admin"?"/admin/announcements":"/announcements";
-            res.redirect(redirectURL);
+            res.redirect(frontenddomain+redirectURL);
           }
           })
       }
@@ -236,7 +234,7 @@ app.post("/api/user-details/change-password",async (req,res)=>{
     }
   }
   else{
-    res.redirect("/");
+    res.redirect(frontenddomain+"/");
   }
 })
 
@@ -245,28 +243,24 @@ app.patch("/api/residents-data/:id",async (req,res)=>{
   const FindUser = await Resident.findOne({house_number:house_number});
   const updatedData = {house_number:house_number,owner:req.body.owner||FindUser.owner,resident:req.body.resident||FindUser.resident};
   await Resident.updateOne({house_number:house_number},updatedData);
-  res.redirect("/residents-loggedIn");
+  res.redirect(frontenddomain+"/residents-loggedIn");
 })
 
-app.patch("/api/announcements/:id",async (req,res)=>{
+app.post("/api/announcements/:id",async (req,res)=>{
   const AnId = req.params.id;
   const FindAn = await Announcement.findOne({_id:AnId});
   const replaceData = {title:req.body.title||FindAn.title,information:req.body.information||FindAn.information,DOA:req.body.DOA||FindAn.DOA};
   await Announcement.updateOne({_id:AnId},replaceData);
   const newUrl = req.user.house_number=="admin"?"/admin/announcements":"/announcements";
-  res.redirect(newUrl);
+  res.redirect(frontenddomain+newUrl);
 })
-
-/*app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, '../client/public', 'index.html'));
-})*/
 
 app.post("/api/announcements",async (req,res)=>{
   const InsertionData=  {title:req.body.title,information:req.body.information,DOA:req.body.date};
   const addAnnouncement = new Announcement(InsertionData);
   addAnnouncement.save();
   const newUrl = req.user.house_number=="admin"?"/admin/announcements":"/announcements";
-  res.redirect(newUrl);
+  res.redirect(frontenddomain+newUrl);
 })
 
 app.post("/api/profile-image",imgupload.single("imagesrc"),async (req,res)=>{
@@ -285,13 +279,13 @@ app.post("/api/profile-image",imgupload.single("imagesrc"),async (req,res)=>{
     const newImage = new ProfileImage({house_number:req.user.house_number,image:req.file.filename});
     newImage.save();
   }
-  res.redirect("/profile");
+  res.redirect(frontenddomain+"/profile");
 })
 
 app.post("/api/user-documents",fileupload.single("filesrc"),async (req,res)=>{
   const AddFile = new UserDocument({house_number:req.user.house_number,name:req.body.filename,file_id:`${req.user.house_number}${req.file.filename}`});
   AddFile.save();
-  res.redirect("/user-documents");
+  res.redirect(frontenddomain+"/user-documents");
 })
 
 app.post("/api/delete-user-documents/:id",async (req,res)=>{
@@ -307,7 +301,7 @@ app.post("/api/delete-user-documents/:id",async (req,res)=>{
       console.log("file deleted...");
     }
   })
-  res.redirect("/user-documents");
+  res.redirect(frontenddomain+"/user-documents");
 })
 
 app.post("/api/download-user-documents/:id",async (req,res)=>{
@@ -315,11 +309,11 @@ app.post("/api/download-user-documents/:id",async (req,res)=>{
   res.download(path.join(__dirname, 'uploads/user-documents/'+file_name));
 })
 
-app.post("/api/announcements/:id",async (req,res)=>{
+app.post("/api/delete-announcements/:id",async (req,res)=>{
   const AnId = req.params.id;
   const deleteAn = await Announcement.deleteOne({_id:AnId});
   const newUrl = req.user.house_number=="admin"?"/admin/announcements":"/announcements";
-  res.redirect(newUrl);
+  res.redirect(frontenddomain+newUrl);
 })
 
 app.post("/api/delete-bill/:id",async (req,res)=>{
@@ -327,7 +321,7 @@ app.post("/api/delete-bill/:id",async (req,res)=>{
   const house_number = req.params.id.slice(0,5)!="admin"?req.params.id.slice(0,3):req.params.id.slice(0,5);
   await Bill.deleteOne({bill_number:bill_number,house_number:house_number});
   const newUrl = req.user.house_number=="admin"?"/admin/payments":"/payments";
-  res.redirect(newUrl);
+  res.redirect(frontenddomain+newUrl);
 })
 
 app.post("/api/admin/payments/:id",async (req,res)=>{
@@ -343,7 +337,7 @@ app.post("/api/admin/payments/:id",async (req,res)=>{
     type:req.body.type||getData.type
   }
   await Bill.updateOne({house_number:house_number,bill_number:bill_number},edittedData);
-  res.redirect("/admin/payments")
+  res.redirect(frontenddomain+"/admin/payments");
 })
 
 app.post("/api/add-bill",async (req,res)=>{
@@ -367,8 +361,7 @@ app.post("/api/add-bill",async (req,res)=>{
     })
     await NewBill.save();
   }
-  const newUrl = req.user.house_number=="admin"?"/admin/payments":"/payments";
-  res.redirect(newUrl);
+  res.redirect(frontenddomain+"/admin/payments");
 })
 
 app.post("/api/payment-verified/:id",async (req,res)=>{
@@ -376,7 +369,7 @@ app.post("/api/payment-verified/:id",async (req,res)=>{
   const house_number = req.params.id.slice(0,3);
   const bill_number = req.params.id.slice(3);
   await Bill.updateOne({house_number:house_number,bill_number:bill_number},{pending:false});
-  res.redirect("/payments");
+  res.redirect(frontenddomain+"/payments");
 })
 
 app.post("/api/generate-receipt/:id",async (req,res)=>{
@@ -416,7 +409,7 @@ app.post("/api/delete-account",async (req,res)=>{
     if(err){
       return next(err);
     }
-    res.redirect("/");
+    res.redirect(frontenddomain+"/");
   })
 })
 
@@ -432,7 +425,7 @@ app.post("/api/add-user",async (req,res)=>{
       try{
         const checkResult = await User.findOne({house_number:house_number});
         if(checkResult!=null){
-          res.redirect("/");
+          res.redirect(frontenddomain+"/");
         }
         else{
           bcrypt.hash(password,saltRounds,async (err,hash)=>{
@@ -452,10 +445,10 @@ app.post("/api/add-user",async (req,res)=>{
               const resetToken = new Token({ type:"authToken",house_number:house_number, token, expires });
               await resetToken.save();
               if(name=="admin"||house_number=="admin"){
-                res.redirect("/admin/announcements");
+                res.redirect(frontenddomain+"/admin/announcements");
               }
               else{
-                res.redirect("/announcements");
+                res.redirect(frontenddomain+"/announcements");
               }
             }
           })
@@ -481,22 +474,22 @@ app.post("/api/forgot-password",async (req,res)=>{
     const { token, expires } = generateToken(60);
     const resetToken = new Token({ type:"reset-password",house_number, token, expires });
     await resetToken.save();
-    const Link = `${req.protocol}://${req.get('host')}/reset-password/${house_number}${token}`;
+    const Link = `${frontenddomain}/reset-password/${house_number}${token}`;
     console.log(Link);
     sendMail(findUser.email,
       "RESET PASSWORD FOR YOUR SOWGANDHIKA APARTMENT ACCOUNT",
       `Click on this link to reset your password: ${Link}`,
       `<p>Click on this link to reset your password: <a href="${Link}">${Link}</a></p>`
     );
-    res.redirect("/");
+    res.redirect(frontenddomain+"/");
   }
   else{
     res.send("User does not exist.");
-    res.redirect("/sign-up");
+    res.redirect(frontenddomain+"/sign-up");
   }
 })
 
-app.post("/reset-password/:id",async (req,res)=>{
+app.post("/api/reset-password/:id",async (req,res)=>{
   const house_number = req.params.id.slice(0,3);
   const token = req.params.id.slice(3);
   console.log(house_number);
@@ -522,7 +515,7 @@ app.post("/reset-password/:id",async (req,res)=>{
         }
         else{
           const update = await User.findOneAndUpdate({house_number:house_number},{password:hash});
-          res.redirect("/");
+          res.redirect(frontenddomain+"/");
         }
         })
       const deleteToken = await Token.deleteOne({house_number:house_number, token: req.params.id.slice(3)});
@@ -566,7 +559,7 @@ passport.use("local",new Strategy({usernameField: 'house_number',passwordField: 
   }
 }))
 
-app.post("/check-user",(req,res,next)=>{
+app.post("/api/check-user",(req,res,next)=>{
   const redirect_url = req.body.house_number=="admin"?"/admin/announcements":"/announcements";
   passport.authenticate("local", (err, user, info) => {
     if (err) {
@@ -575,7 +568,7 @@ app.post("/check-user",(req,res,next)=>{
     }
     if (!user) {
       console.log('Authentication failed:', info);
-      return res.redirect('/');
+      return res.redirect(frontenddomain+'/');
     }
     req.logIn(user, async (err) => {
       if (err) {
@@ -586,7 +579,7 @@ app.post("/check-user",(req,res,next)=>{
       const { token, expires } = generateToken(60);
       const resetToken = new Token({ type:"authToken",house_number:user.house_number, token, expires });
       await resetToken.save();
-      return res.redirect(redirect_url);
+      return res.redirect(frontenddomain+redirect_url);
     });
   })(req, res, next);
 });
@@ -604,3 +597,4 @@ app.listen(port,()=>{
 })
 
 export default app;
+

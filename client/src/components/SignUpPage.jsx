@@ -20,7 +20,7 @@ function SignUpPage(props){
         <div className="signup-box-inner">
             <img src="./images/house-icon.png" alt="house-icon" height={70}/>
             <h1>Create A New Account</h1>
-            <form className="login-data" method="POST" action="/api/add-user">
+            <form className="login-data" method="POST" action="http://localhost:8000/api/add-user">
                 <div className="input-data">
                     <label className="name-label"><img className="login-icons" src="./images/person.svg" alt="name icon"/></label>
                     <input className="login-input name" type="text" name="name" placeholder="Name" onChange={updateSignUpInfo} value={signUpInfo.name} required/>

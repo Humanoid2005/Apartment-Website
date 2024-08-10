@@ -44,11 +44,12 @@ function AddBill(props) {
   const handleSubmit = async () => {
     console.log("Submitting....");
     try {
-      const response = await fetch('/api/add-bill', {
+      const response = await fetch('http://localhost:8000/api/add-bill', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
+        credentials:"include",
         body: JSON.stringify({ selectedOptions,deadline,type,amount}),
       });
 
