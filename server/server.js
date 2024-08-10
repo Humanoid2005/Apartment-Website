@@ -24,7 +24,7 @@ import sendMail from "./mailer.js";
 import generateReceipt from "./create_pdf.js";
 
 const app = express();
-const frontenddomain = "https://sowgandhika-apartments.netlify.app";//"http://localhost:5173"
+const frontenddomain ="http://localhost:5173"; //"https://sowgandhika-apartments.netlify.app"
 const port = process.env.PORT || 8000;
 const saltRounds = 10;
 const house_numbers = ["admin","001","002","003","004","101","102","103","104","105","201","202","203","204","205","301","302","303","304"];
@@ -32,25 +32,30 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dbConnectionString = `mongodb+srv://SriramSrikanth:${process.env.MongoDBPassword}@sowgandhikaapartmentpro.igtlexc.mongodb.net/Users?retryWrites=true&w=majority&appName=SowgandhikaApartmentProject`;
 
+app.use(cors({
+  origin: frontenddomain,
+  methods: ["GET", "POST", "PATCH", "DELETE"],
+  credentials: true
+}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(session({
   secret:process.env.secretKey,
   resave: true,
   saveUninitialized: true,
   cookie:{
     maxAge:1000*60*60*24,
+    secure:true,
+    sameSite:"None",
+    httpOnly:true,
+    domain:".netlify.app"
   }
 }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({
-  origin: frontenddomain,
-  methods: ["GET", "POST", "PATCH", "DELETE"],
-  credentials: true
-}));
-app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const UsersDB = await mongoose.connect(dbConnectionString)
@@ -137,13 +142,8 @@ app.get("/api/user-documents",async (req,res)=>{
 
 app.get("/api/is-authenticated",async (req,res)=>{
   if(req.isAuthenticated()){
-    const GetAuthToken = await Token.findOne({type:"authToken",house_number:req.user.house_number});
-    if(GetAuthToken){
-      res.json({house_number:GetAuthToken.house_number,status:true});
-    }
-    else{
-      res.json({house_number:null,status:false});
-    }
+    console.log(`${req.user.house_number} is authenticated...`);
+    res.json({house_number:req.user.house_number,status:true});
   }
   else{
     res.json({house_number:null,status:false});

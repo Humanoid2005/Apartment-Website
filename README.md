@@ -31,22 +31,42 @@ https://humanoid2005.github.io/Nike-Clone/
 Clone the project
 
 ```bash
-  git clone https://github.com/Humanoid2005/Basic-Blog-Website.git
+  git clone https://github.com/Humanoid2005/Apartment-Website.git
 ```
 
 Go to the project directory
 
 ```bash
-  cd project-folder
+  cd Apartment-Website
 ```
 
-Install dependencies
+Install dependencies for server
+
+```bash
+  cd server
+```
 
 ```bash
   npm install
 ```
 
 Start the server
+
+```bash
+  node server.js
+```
+
+Install dependencies for client
+
+```bash
+  cd client
+```
+
+```bash
+  npm install
+```
+
+Start the frontend
 
 ```bash
   npm run dev
