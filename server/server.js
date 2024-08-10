@@ -47,6 +47,9 @@ app.use(session({
   saveUninitialized: true,
   cookie:{
     maxAge:1000*60*60*24,
+    secure:true,
+    sameSite:"None",
+    domain:"https://sowgandhika-apartments.netlify.app"
   }
 }));
 app.use(passport.initialize());
