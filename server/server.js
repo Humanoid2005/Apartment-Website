@@ -50,6 +50,7 @@ app.use(session({
     secure:true,
     sameSite:"None",
     httpOnly:true,
+    domain:".netlify.app"
   }
 }));
 app.use(passport.initialize());
