@@ -32,6 +32,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const dbConnectionString = `mongodb+srv://SriramSrikanth:${process.env.MongoDBPassword}@sowgandhikaapartmentpro.igtlexc.mongodb.net/Users?retryWrites=true&w=majority&appName=SowgandhikaApartmentProject`;
 
+app.use(cors({
+  origin: frontenddomain,
+  methods: ["GET", "POST", "PATCH", "DELETE"],
+  credentials: true
+}));
+
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(session({
   secret:process.env.secretKey,
   resave: true,
@@ -43,14 +52,6 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors({
-  origin: frontenddomain,
-  methods: ["GET", "POST", "PATCH", "DELETE"],
-  credentials: true
-}));
-app.use(express.json());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 const UsersDB = await mongoose.connect(dbConnectionString)
