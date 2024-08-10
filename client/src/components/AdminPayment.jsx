@@ -9,7 +9,7 @@ import DeleteBill from "./DeleteBill";
 function AdminPayment(){
     const [filter,setfilter] = React.useState("");
     const [searchbar,setsearchbar] = React.useState("");
-    const {data:bills,loading,error} = useFetch("http://localhost:8000/api/bills");
+    const {data:bills,loading,error} = useFetch("https://apartment-website-production.up.railway.app/api/bills");
 
     if(error){
         return <LoadingPage message={"Loading..."}/>;
