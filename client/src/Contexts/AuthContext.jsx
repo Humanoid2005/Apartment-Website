@@ -8,7 +8,7 @@ export const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [houseNumber, setHouseNumber] = useState("");
     const [isLoading, setIsLoading] = useState(true);
-    const { data: token, pending, error } = useFetch("https://apartment-website-production.up.railway.app/api/is-authenticated");
+    const { data: token, pending, error } = useFetch("http://localhost:8000/api/is-authenticated");
 
     useEffect(() => {
         if (error) {

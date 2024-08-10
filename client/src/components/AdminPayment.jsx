@@ -9,7 +9,7 @@ import DeleteBill from "./DeleteBill";
 function AdminPayment(){
     const [filter,setfilter] = React.useState("");
     const [searchbar,setsearchbar] = React.useState("");
-    const {data:bills,loading,error} = useFetch("https://apartment-website-production.up.railway.app/api/bills");
+    const {data:bills,loading,error} = useFetch("http://localhost:8000/api/bills");
 
     if(error){
         return <LoadingPage message={"Loading..."}/>;
@@ -59,11 +59,11 @@ function AdminPayment(){
                             {bill.pending==false?<DeleteBill bill_id = {bill.bill_number} bgcolor={boxcolor} />:null}
                             <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>Bill ID:</span> {bill.bill_number}</h3>
                             {bill.pending==true?<DeleteBill bill_id = {bill.bill_number} bgcolor={boxcolor} house_number={bill.house_number}/>:null}
-                            <PaymentEditFrame url={"https://apartment-website-production.up.railway.app/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Type: " valueName="type" data={bill.type} bgcolor={boxcolor} headingcolor={headingcolor}/>
+                            <PaymentEditFrame url={"http://localhost:8000/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Type: " valueName="type" data={bill.type} bgcolor={boxcolor} headingcolor={headingcolor}/>
                             <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>House Number:</span> {bill.house_number}</h3>
-                            <PaymentEditFrame url={"https://apartment-website-production.up.railway.app/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Deadline: " valueName="deadline" data={formatted_date} bgcolor={boxcolor} isDate={true} headingcolor={headingcolor}/>
-                            {bill.pending?<PaymentEditFrame url={"https://apartment-website-production.up.railway.app/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Amount: " valueName="amount" data={bill.amount} bgcolor={boxcolor} headingcolor={headingcolor}/>:<h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor}}>Payment Amount:</span> {bill.amount}</h3>}
-                            {bill.pending?null:<form className="view-bill" style={{backgroundColor:boxcolor}} action={`https://apartment-website-production.up.railway.app/api/generate-receipt/${bill.house_number}${bill.bill_number}`} method="POST">
+                            <PaymentEditFrame url={"http://localhost:8000/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Deadline: " valueName="deadline" data={formatted_date} bgcolor={boxcolor} isDate={true} headingcolor={headingcolor}/>
+                            {bill.pending?<PaymentEditFrame url={"http://localhost:8000/api/admin/payments/"+`${bill.house_number}`+`${bill.bill_number}`} title="Payment Amount: " valueName="amount" data={bill.amount} bgcolor={boxcolor} headingcolor={headingcolor}/>:<h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor}}>Payment Amount:</span> {bill.amount}</h3>}
+                            {bill.pending?null:<form className="view-bill" style={{backgroundColor:boxcolor}} action={`http://localhost:8000/api/generate-receipt/${bill.house_number}${bill.bill_number}`} method="POST">
                                 <input type="hidden" name="bill_id" value={bill.bill_number}/>
                                 <input type="hidden" name="house_number" value={bill.house_number}/>
                                 <button className="view-bill-button">View Bill</button>

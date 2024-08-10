@@ -25,7 +25,7 @@ function Modal(props) {
           <div className="modal-content">
             <h3>Are you sure about deleting your account ?</h3>
             <p>Please note that these changes cannot be reversed.</p>
-            <form className="confirm-delete-form" action="https://apartment-website-production.up.railway.app/api/delete-account" method="POST">
+            <form className="confirm-delete-form" action="http://localhost:8000/api/delete-account" method="POST">
                     <button className="delete-account-button">Delete Account</button>
             </form>
             <img className="close-image close-modal" src="/images/close.png" height={20} onClick={toggleModal}/>
