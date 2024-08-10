@@ -10,7 +10,7 @@ function Payment(){
     const {houseNumber:house_number} = useAuth();
     const [filter,setfilter] = React.useState("");
     const [searchbar,setsearchbar] = React.useState("");
-    const {data:bills,loading,error} = useFetch("http://localhost:8000/api/bills");
+    const {data:bills,loading,error} = useFetch("https://apartment-website-production.up.railway.app/api/bills");
 
     if(error){
         return <LoadingPage message={"Loading..."}/>;
@@ -75,11 +75,11 @@ function Payment(){
                             <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>House Number:</span> {bill.house_number}</h3>
                             <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>Payment Deadline:</span> {formatted_date}</h3>
                             <h3 style={{backgroundColor:boxcolor}}><span className="payment-heading" style={{backgroundColor:boxcolor,color:headingcolor}}>Payment Amount:</span> {bill.amount}</h3>
-                            {bill.pending?<form className="payment-form" style={{backgroundColor:boxcolor}} action={`http://localhost:8000/api/payment-verified/${bill.house_number}${bill.bill_number}`} method="POST">
+                            {bill.pending?<form className="payment-form" style={{backgroundColor:boxcolor}} action={`https://apartment-website-production.up.railway.app/api/payment-verified/${bill.house_number}${bill.bill_number}`} method="POST">
                                 <input type="hidden" name="bill_id" value={bill.bill_number}/>
                                 <input type="hidden" name="house_number" value={bill.house_number}/>
                                 <button className="payment-button">Pay Now</button>
-                            </form>:<form className="view-bill" style={{backgroundColor:boxcolor}} action={`http://localhost:8000/api/generate-receipt/${bill.house_number}${bill.bill_number}`} method="POST">
+                            </form>:<form className="view-bill" style={{backgroundColor:boxcolor}} action={`https://apartment-website-production.up.railway.app/api/generate-receipt/${bill.house_number}${bill.bill_number}`} method="POST">
                                 <input type="hidden" name="bill_id" value={bill.bill_number}/>
                                 <input type="hidden" name="house_number" value={bill.house_number}/>
                                 <button className="view-bill-button">View Bill</button>

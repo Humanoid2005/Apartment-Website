@@ -24,7 +24,7 @@ import sendMail from "./mailer.js";
 import generateReceipt from "./create_pdf.js";
 
 const app = express();
-const frontenddomain = "https://sowgandhika-apartments.netlify.app";
+const frontenddomain = "https://sowgandhika-apartments.netlify.app";//"http://localhost:5173"
 const port = process.env.PORT || 8000;
 const saltRounds = 10;
 const house_numbers = ["admin","001","002","003","004","101","102","103","104","105","201","202","203","204","205","301","302","303","304"];

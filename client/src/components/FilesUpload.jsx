@@ -8,7 +8,7 @@ function FilesUpload(){
     const [searchbar,setsearchbar] = React.useState("");
     const [addfile,setaddfile] = React.useState(false);
     const [filename,setfilename] = React.useState("");
-    const {data:files,pending,error} = useFetch("http://localhost:8000/api/user-documents");
+    const {data:files,pending,error} = useFetch("https://apartment-website-production.up.railway.app/api/user-documents");
 
 
     if(error){
@@ -17,7 +17,7 @@ function FilesUpload(){
 
     return (pending?<LoadingPage message={"Loading your files..."}/>:
         <div className="user-file-data">
-            {addfile?<form  className="add-file-form" action="http://localhost:8000/api/user-documents" method="POST" enctype="multipart/form-data">
+            {addfile?<form  className="add-file-form" action="https://apartment-website-production.up.railway.app/api/user-documents" method="POST" enctype="multipart/form-data">
                 <input className="user-document-file-input" type="file" name="filesrc" placeholder="Drop your file"/>
                 <input className="user-document-filename-input" type="text" name="filename" value={filename} onChange={(event)=>{setfilename(event.target.value)}} placeholder="File Name"/>
                 <button type="submit" className="user-document-submit-button">Add File</button>
@@ -31,10 +31,10 @@ function FilesUpload(){
                         <div className="user-file">
                             <h3 className="file-name">{file.name}</h3>
                             <div className="file-icons">
-                                <form className="download-file" action={"http://localhost:8000/api/download-user-documents/"+file.file_id} method="POST">
+                                <form className="download-file" action={"https://apartment-website-production.up.railway.app/api/download-user-documents/"+file.file_id} method="POST">
                                     <button type="submit" className="download-button"><img src="/images/download-button.png" height={30}/></button>
                                 </form>
-                                <form className="delete-file" action={"http://localhost:8000/api/delete-user-documents/"+file.file_id} method="POST">
+                                <form className="delete-file" action={"https://apartment-website-production.up.railway.app/api/delete-user-documents/"+file.file_id} method="POST">
                                     <button type="submit" className="delete-button"><img src="/images/delete.png" height={30}/></button>
                                 </form>
                             </div>
