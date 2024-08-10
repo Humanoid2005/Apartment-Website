@@ -77,3 +77,4 @@ To open the website, type the link given below
 ```bash
   http://localhost:5173/
 ```
+Website Screenshots : https://drive.google.com/drive/folders/1eljZslr3c_TkJQ4-HXAmTgExM-56T10H?usp=sharing
