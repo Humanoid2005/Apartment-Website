@@ -49,7 +49,7 @@ app.use(session({
     maxAge:1000*60*60*24,
     secure:true,
     sameSite:"None",
-    domain:".netlify.app"
+    httpOnly:true,
   }
 }));
 app.use(passport.initialize());
