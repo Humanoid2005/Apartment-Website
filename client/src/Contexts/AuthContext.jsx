@@ -16,6 +16,7 @@ export const AuthProvider = ({ children }) => {
         }
 
         if (!pending && token) {
+            console.log(token);
             if (token.status) {
                 console.log(token);
                 setHouseNumber(token.house_number);
@@ -23,7 +24,6 @@ export const AuthProvider = ({ children }) => {
             }
             setIsLoading(false);
         }
-        console.log(token);
     }, [token, pending, error]);
 
     const login = () => {
