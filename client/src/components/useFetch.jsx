@@ -31,7 +31,7 @@ const useFetch = (url)=>{
                     setpending(false);
                     seterror(err.message);
                 })
-        },1000);
+        },10000);
 
         return ()=> abortcontrol.abort();
     },[url])
