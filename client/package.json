@@ -1,8 +1,5 @@
 {
-<<<<<<< HEAD
-  "proxy": "http://localhost:8000",
-=======
->>>>>>> 50d31072bb1bcf99a7b504fc2609c9e130642bbc
+  "proxy":"http://localhost:8000",
   "name": "client",
   "private": true,
   "version": "0.0.0",
