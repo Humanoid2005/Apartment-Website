@@ -20,11 +20,6 @@ This is an apartment website created in order to digitalise and manage the impor
 
 ![Tech Stack](./readme_images/mern_stack.png)
 
-## Deployment
-
-Click on the link given below to view the apartment app.
-
-https://humanoid2005.github.io/Nike-Clone/
 
 ## Run Locally
 
