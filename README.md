@@ -73,3 +73,9 @@ To open the website, type the link given below
   http://localhost:5173/
 ```
 Website Screenshots : https://drive.google.com/drive/folders/1eljZslr3c_TkJQ4-HXAmTgExM-56T10H?usp=sharing
+
+## Contributions
+I welcome contributions! Feel free to fork the project and open a pull request for any improvements, bug fixes, or new features.
+
+## License
+This project is licensed under the MIT License. See the LICENSE file for more details.
